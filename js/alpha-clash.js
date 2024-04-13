@@ -14,7 +14,10 @@
 function handelKeyBordButtonKyeUp(event) {
   const playerPress = event.key;
   console.log("player press", playerPress);
-
+  // stop the game
+  if (playerPress === "Escape") {
+    gameOver();
+  }
   // get the expected key
 
   const currentAlphabetElement = document.getElementById("current-alphabet");
@@ -99,4 +102,14 @@ function play() {
 function gameOver() {
   hideElementById("play-ground");
   showElementById("final-score");
+
+  // update final sore
+  const lastScore = getTextElementValueById("current-score");
+  console.log(lastScore);
+  setTextElementValueById("game-score", lastScore);
+
+  // clear the last hilighted alphabet
+  const currentAlphabet = getElementTextById("current-alphabet");
+  console.log(currentAlphabet);
+  removeBgColor(currentAlphabet);
 }
