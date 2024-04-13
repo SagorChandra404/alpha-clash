@@ -26,8 +26,45 @@ function handelKeyBordButtonKyeUp(event) {
 
   if (playerPress === expectedAlphabet) {
     console.log("you get a point ");
+    console.log("your point :", expectedAlphabet);
+
+    const currentScore = getTextElementValueById("current-score");
+    const updatedScore = currentScore + 1;
+    setTextElementValueById("current-score", updatedScore);
+    // --------------------------------------------------------
+    // update score
+    // const currentScoreElement = document.getElementById("current-score");
+    // const currentScoreText = currentScoreElement.innerText;
+    // const currentScore = parseInt(currentScoreText);
+    // // console.log("my current text", currentScore);
+    // // increase the score by 1
+    // const newScore = currentScore + 1;
+    // // console.log(newScore);
+
+    // currentScoreElement.innerText = newScore;
+    // start a new round
+    removeBgColor(expectedAlphabet);
+    continueGame();
   } else {
     console.log("you missed a life");
+
+    const currentLife = getTextElementValueById("current-life");
+    const updatedLife = currentLife - 1;
+    setTextElementValueById("current-life", updatedLife);
+
+    if (updatedLife === 0) {
+      gameOver();
+    }
+
+    // ---------------------------------------------------------------
+    // const currentLifeElement = document.getElementById("current-life");
+    // const currentLifeText = currentLifeElement.innerText;
+    // const currentLife = parseInt(currentLifeText);
+    // const newLife = currentLife - 1;
+
+    // currentLifeElement.innerText = newLife;
+
+    // new game and end game
   }
 }
 document.addEventListener("keyup", handelKeyBordButtonKyeUp);
@@ -37,7 +74,7 @@ document.addEventListener("keyup", handelKeyBordButtonKyeUp);
 function continueGame() {
   // genarate a random alphabet
   const alphabet = getArandomAlphabet();
-  console.log("your random alphabet :", alphabet);
+  // console.log("your random alphabet :", alphabet);
 
   // random li genaratited to the screen
   const currentAlphabetElement = document.getElementById("current-alphabet");
@@ -48,7 +85,18 @@ function continueGame() {
 }
 
 function play() {
+  // hide everyyhing show only playground
   hideElementById("home-screen");
   showElementById("play-ground");
+  hideElementById("final-score");
+
+  // reset score and life
+  setTextElementValueById("current-life", 5);
+  setTextElementValueById("current-score", 0);
   continueGame();
+}
+
+function gameOver() {
+  hideElementById("play-ground");
+  showElementById("final-score");
 }
